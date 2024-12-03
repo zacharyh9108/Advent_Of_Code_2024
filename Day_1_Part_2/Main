@@ -1,0 +1,69 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<String> leftList = getFileDataLeftList("src/List");
+        ArrayList<String> rightList = getFileDataRightList("src/List");
+
+        int ans = 0;
+        for (int numLeft = 0; numLeft < leftList.size(); numLeft++) {
+            int x = 0;
+            for (int numRight = 0; numRight < rightList.size(); numRight++) {
+                if (rightList.get(numRight).equals(leftList.get(numLeft))) {
+                    x++;
+                }
+            }
+            ans = ans + Integer.parseInt(leftList.get(numLeft)) * x;
+        }
+        System.out.println(ans);
+    }
+
+    public static ArrayList<String> getFileDataLeftList(String fileName) {
+        ArrayList<String> fileData = new ArrayList<String>();
+        try
+        {
+            File f = new File(fileName);
+            Scanner s = new Scanner(f);
+            while (s.hasNextLine())
+            {
+                String line = s.nextLine();
+                line = line.substring(0, line.indexOf(" "));
+                if (!line.isEmpty())
+                {
+                    fileData.add(line);
+                }
+            }
+            return fileData;
+        }
+        catch (FileNotFoundException e)
+        {
+            return fileData;
+        }
+    }
+
+    public static ArrayList<String> getFileDataRightList(String fileName) {
+        ArrayList<String> fileData = new ArrayList<String>();
+        try
+        {
+            File f = new File(fileName);
+            Scanner s = new Scanner(f);
+            while (s.hasNextLine())
+            {
+                String line = s.nextLine();
+                line = line.substring(line.indexOf("   ") + 3);
+                if (!line.isEmpty())
+                {
+                    fileData.add(line);
+                }
+            }
+            return fileData;
+        }
+        catch (FileNotFoundException e)
+        {
+            return fileData;
+        }
+    }
+}
